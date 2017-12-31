@@ -1,7 +1,8 @@
 namespace FSharpWebApp.DataAccessLayer
-    type IRepository<'E> = 
-        abstract member AddEntity:'E -> bool
-        abstract member UpdateEntity: int * 'E -> bool
-        abstract member Get:int -> 'E
-        abstract member GetAll:unit -> array<'E>
-        abstract member Delete:int -> bool
+    open System.Linq
+    type IRepository<'E, 'K> = 
+        abstract member AddEntity:'E -> 'E
+        abstract member UpdateEntity: 'K * 'E -> 'E
+        abstract member Get:('K) -> 'E
+        abstract member GetAll:unit -> IQueryable<'E>
+        abstract member Delete:'K -> bool

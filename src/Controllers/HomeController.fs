@@ -27,10 +27,10 @@ type HomeController (context: AppDataContext) =
                     })]                             
             }
         Group(record)
-        |> (repo:> IRepository<Group>).AddEntity
+        |> (repo:> IRepository<Group, int>).AddEntity
         |> ignore
 
-        (repo:> IRepository<Group>).GetAll
+        (repo:> IRepository<Group, int>).GetAll
         |> this.View
 
     member this.About () =

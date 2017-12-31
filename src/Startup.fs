@@ -10,6 +10,9 @@ open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.EntityFrameworkCore
 open FSharpWebApp.DataAccessLayer
+open Microsoft.AspNetCore.Identity
+open Microsoft.AspNetCore.Identity.EntityFrameworkCore
+open FSharpWebApp.Models
 
 type Startup private () =
     new (configuration: IConfiguration) as this =
@@ -22,6 +25,11 @@ type Startup private () =
         services
             .AddDbContext<AppDataContext>
                 (fun(options) -> options.UseSqlServer(@"Server=.\;Initial Catalog=FSCourseDb;Integrated Security=true;")|> ignore) |> ignore
+
+        services.AddIdentity<ApplicationUser, ApplicationRole>()
+            .AddEntityFrameworkStores<AppDataContext>()
+            .AddDefaultTokenProviders() |> ignore           
+
         services.AddMvc() |> ignore
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +41,7 @@ type Startup private () =
             app.UseExceptionHandler("/Home/Error") |> ignore
 
         app.UseStaticFiles() |> ignore
-
+        app.UseAuthentication() |> ignore
         app.UseMvc(fun routes ->
             routes.MapRoute(
                 name = "default",

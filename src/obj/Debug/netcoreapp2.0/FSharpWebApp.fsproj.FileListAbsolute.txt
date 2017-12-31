@@ -5,3 +5,10 @@ C:\Users\Mouad\Documents\demos\FSharpWebApp\bin\Debug\netcoreapp2.0\FSharpWebApp
 C:\Users\Mouad\Documents\demos\FSharpWebApp\bin\Debug\netcoreapp2.0\FSharpWebApp.pdb
 C:\Users\Mouad\Documents\demos\FSharpWebApp\obj\Debug\netcoreapp2.0\FSharpWebApp.dll
 C:\Users\Mouad\Documents\demos\FSharpWebApp\obj\Debug\netcoreapp2.0\FSharpWebApp.pdb
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\bin\Debug\netcoreapp2.0\FSharpWebApp.deps.json
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\bin\Debug\netcoreapp2.0\FSharpWebApp.runtimeconfig.json
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\bin\Debug\netcoreapp2.0\FSharpWebApp.runtimeconfig.dev.json
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\bin\Debug\netcoreapp2.0\FSharpWebApp.dll
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\bin\Debug\netcoreapp2.0\FSharpWebApp.pdb
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\obj\Debug\netcoreapp2.0\FSharpWebApp.dll
+C:\Users\Mouad\Documents\demos\FSharpWebApp\src\obj\Debug\netcoreapp2.0\FSharpWebApp.pdb

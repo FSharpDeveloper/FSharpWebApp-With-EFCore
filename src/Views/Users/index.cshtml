@@ -1,0 +1,218 @@
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-table.js"></script>
+<script src="/js/ko.mapping.js"></script>
+
+<table id="users-table" class="table table-striped table-hover">
+
+    <thead>
+        <tr>
+            <th>
+                <label>User Name</label>
+                <input type="text" class="form-control" data-bind="value: NewUser().userName">
+            </th>
+            <th>
+                <label>Email</label>
+                <input type="text" class="form-control" data-bind="value: NewUser().email">
+            </th>            
+            <th>
+                <label>Password</label>
+                <input type="password" class="form-control" data-bind="value: NewUser().password">
+            </th>            
+            <th>
+                <button class="btn btn-primary" data-bind="click: AddUser">Add</button>
+            </th>
+        </tr>
+        <tr>
+        <th>#</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: Users">
+        <tr>
+            <th scope="row">1</th>
+            <td data-bind="text: id"></td>
+            <td data-bind="text: userName"></td>
+            <td data-bind="text: email"></td>            
+            <td data-bind="password: passwordHash"></td>            
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan='3'>
+                <button class="btn btn-primary">Add New </button>
+            </td>
+        </tr>
+    </tfoo>
+</table>
+
+<script>
+    function UsersViewModel(users){
+        var self = this;
+        self.Users = ko.observableArray(users);
+        self.NewUser = ko.observable({ id:0, userName:"", email:"", password:""});
+        self.AddUser = function(){
+            $.ajax({
+                url: '/api/users',
+                method: 'POST',
+                data: { user: self.NewUser(), password: self.NewUser().password },
+                success: (success) => {
+                    alert(success);
+                    self.Users.push(success);
+                }
+            })
+        }
+    }
+
+    $(document).ready(function(){
+
+    })
+
+    $.get("/api/users", function(result){
+        var vm = new UsersViewModel(result);
+        window.usersvm = vm;
+        ko.applyBindings(window.usersvm, document.getElementById("users-table"))
+    })
+</script>
+<!-- <div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="fresh-table full-color-blue">
+                    <div class="toolbar">
+                        <button id="alertBtn" class="btn btn-default">Alert</button>
+                    </div>
+
+                    <table id="fresh-table" class="table">
+                        <thead>
+                            <th data-field="id" data-sortable="true">ID</th>
+                            <th data-field="name" data-sortable="true">GroupName</th>
+                            <th data-field="" data-sortable="true">
+                            </th>
+                            <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
+<script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-table.js"></script>
+<script src="js/ko.mapping.js"></script>
+<script src="/js/app/viewmodels.js"></script>
+<script type="text/javascript">
+    var $table = $('#fresh-table'),
+        $alertBtn = $('#alertBtn'),
+        full_screen = false;
+
+    $().ready(function () {
+        $.get("/Roles/LoadRoles", (success) => {
+                window.data = success;
+                $table.bootstrapTable({
+                        toolbar: ".toolbar",
+                        data: success,
+                        showRefresh: true,
+                        search: true,
+                        showToggle: true,
+                        showColumns: true,
+                        pagination: true,
+                        striped: true,
+                        pageSize: 8,
+                        pageList: [8, 10, 25, 50, 100],
+                        detailView: true,
+                        onExpandRow: function(index, row, $detail) {
+                            console.log(row);
+                            $detail.append('<table class="table table-hover table-stripped"></table>');
+                            $detail.find('.table').bootstrapTable({
+                                columns: [{
+                                    field: 'id',
+                                    title: 'UserId'
+                                }, {
+                                    field: 'username',
+                                    title: 'Username'
+                                }],
+                            data: row.members                        
+                        });
+                        console.log($detail)
+                    },
+                    formatShowingRows: function (pageFrom, pageTo, totalRows) {
+                        //do nothing here, we don't want to show the text "showing x of y from..." 
+                    },
+                    formatRecordsPerPage: function (pageNumber) {
+                        return pageNumber + " rows visible";
+                    },
+                    icons: {
+                        refresh: 'fa fa-refresh',
+                        toggle: 'fa fa-th-list',
+                        columns: 'fa fa-columns',
+                        detailOpen: 'fa fa-plus-circle',
+                        detailClose: 'fa fa-minus-circle'
+                    }
+                });
+        });
+
+
+
+
+    $(window).resize(function () {
+        $table.bootstrapTable('resetView');
+    });
+
+
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            alert('You click like icon, row: ' + JSON.stringify(row));
+            console.log(value, row, index);
+        },
+        'click .edit': function (e, value, row, index) {
+            alert('You click edit icon, row: ' + JSON.stringify(row));
+            console.log(value, row, index);
+        },
+        'click .remove': function (e, value, row, index) {
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            });
+
+        }
+    };
+
+    $alertBtn.click(function () {
+        alert("You pressed on Alert");
+    });
+
+    });
+
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+            '<i class="fa fa-heart"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+            '<i class="fa fa-edit"></i>',
+            '</a>',
+            '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+            '<i class="fa fa-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+</script> -->

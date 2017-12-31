@@ -5,8 +5,10 @@
   <ItemGroup>
     <Compile Include="Models/*.fs" />
     <Compile Include="DataAccessLayer/*.fs" />
+    <Compile Include="ViewModels/*" />    
     <Compile Include="Migrations/*.fs" />
-    <Compile Include="Controllers/HomeController.fs" />
+    <Compile Include="Controllers/*" />
+    <Compile Include="Controllers/api/*.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
@@ -15,6 +17,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkcore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkcore.Design" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkcore.SqlServer" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkcore.Tools.DotNet" Version="2.0.1" />
   </ItemGroup>
 </Project>
