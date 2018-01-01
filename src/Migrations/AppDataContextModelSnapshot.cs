@@ -22,7 +22,7 @@ namespace FSharpWebApp.Migrations
 
             modelBuilder.Entity("FSharpWebApp.Models.ApplicationRole", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -46,12 +46,10 @@ namespace FSharpWebApp.Migrations
 
             modelBuilder.Entity("FSharpWebApp.Models.ApplicationUser", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
-
-                    b.Property<int?>("ApplicationRoleId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -85,8 +83,6 @@ namespace FSharpWebApp.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationRoleId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -138,7 +134,7 @@ namespace FSharpWebApp.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -147,7 +143,8 @@ namespace FSharpWebApp.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -156,7 +153,7 @@ namespace FSharpWebApp.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -165,7 +162,8 @@ namespace FSharpWebApp.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -174,7 +172,7 @@ namespace FSharpWebApp.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -182,7 +180,8 @@ namespace FSharpWebApp.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -191,11 +190,11 @@ namespace FSharpWebApp.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -204,9 +203,9 @@ namespace FSharpWebApp.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -219,13 +218,6 @@ namespace FSharpWebApp.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FSharpWebApp.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("FSharpWebApp.Models.ApplicationRole")
-                        .WithMany("AspNetUsers")
-                        .HasForeignKey("ApplicationRoleId");
-                });
-
             modelBuilder.Entity("FSharpWebApp.Models.Member", b =>
                 {
                     b.HasOne("FSharpWebApp.Models.Group")
@@ -234,7 +226,7 @@ namespace FSharpWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("FSharpWebApp.Models.ApplicationRole")
                         .WithMany()
@@ -242,7 +234,7 @@ namespace FSharpWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("FSharpWebApp.Models.ApplicationUser")
                         .WithMany()
@@ -250,7 +242,7 @@ namespace FSharpWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("FSharpWebApp.Models.ApplicationUser")
                         .WithMany()
@@ -258,7 +250,7 @@ namespace FSharpWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("FSharpWebApp.Models.ApplicationRole")
                         .WithMany()
@@ -271,7 +263,7 @@ namespace FSharpWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("FSharpWebApp.Models.ApplicationUser")
                         .WithMany()

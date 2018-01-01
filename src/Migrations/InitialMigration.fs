@@ -87,7 +87,7 @@ open System.Collections.Generic
     type AspNetUserTokensKey = 
         {   UserId:obj; LoginProvider:obj; Name:obj }
     [<DbContext(typeof<AppDataContext>)>]
-    [<Migration("29122017_Initial")>]
+    [<Migration("01012018_Initial")>]
     type Init() = 
         inherit Migration()
         override this.Up(migrationBuilder: MigrationBuilder) = 
@@ -124,7 +124,7 @@ open System.Collections.Generic
                 name = "AspNetRoles",
                 columns = (fun table ->
                     {
-                        Id = table.Column<int>(nullable = false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        Id = table.Column<string>(nullable = false)
                         ConcurrencyStamp = table.Column<string>(nullable = true)
                         Name = table.Column<string>(maxLength = Nullable<int>(256), nullable = true)
                         NormalizedName = table.Column<string>(maxLength = Nullable<int>(256), nullable = true)
@@ -137,7 +137,7 @@ open System.Collections.Generic
                 name = "AspNetUsers",
                 columns = (fun table ->
                     {
-                        Id = table.Column<int>(nullable= false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        Id = table.Column<string>(nullable= false)
                         AccessFailedCount = table.Column<int>(nullable= false)
                         ConcurrencyStamp = table.Column<string>(nullable= true)
                         Email = table.Column<string>(maxLength= Nullable<int>(256), nullable= true)
@@ -164,7 +164,7 @@ open System.Collections.Generic
                         Id = table.Column<int>(nullable= false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                         ClaimType = table.Column<string>(nullable= true)
                         ClaimValue = table.Column<string>(nullable= true)
-                        RoleId = table.Column<int>(nullable= false)
+                        RoleId = table.Column<string>(nullable= false)
                     }),
                 constraints = fun table ->                
                     table.PrimaryKey("PK_AspNetRoleClaims", fun x -> x.Id :> obj) |> ignore
@@ -183,7 +183,7 @@ open System.Collections.Generic
                             .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                         ClaimType = table.Column<string>(nullable= true)
                         ClaimValue = table.Column<string>(nullable= true)
-                        UserId = table.Column<int>(nullable= false)
+                        UserId = table.Column<string>(nullable= false)
                     }),
                 constraints = fun table ->                
                     table.PrimaryKey("PK_AspNetUserClaims", fun x -> x.Id :> obj) |> ignore 
@@ -201,7 +201,7 @@ open System.Collections.Generic
                         LoginProvider = table.Column<string>(nullable= false)
                         ProviderKey = table.Column<string>(nullable= false)
                         ProviderDisplayName = table.Column<string>(nullable= true)
-                        UserId = table.Column<int>(nullable= false)
+                        UserId = table.Column<string>(nullable= false)
                     })
                 // constraints= fun table ->
                 //     table.PrimaryKey("PK_AspNetUserLogins", fun x ->  { LoginProvider = x.LoginProvider:>obj; ProviderKey = x.ProviderKey:>obj  } :> obj ) |> ignore
@@ -217,8 +217,8 @@ open System.Collections.Generic
                 name = "AspNetUserRoles",
                 columns = (fun table ->
                     {
-                        UserId = table.Column<int>(nullable= false)
-                        RoleId = table.Column<int>(nullable= false)
+                        UserId = table.Column<string>(nullable= false)
+                        RoleId = table.Column<string>(nullable= false)
                     }),
                 constraints = fun table ->
                     table.PrimaryKey("PK_AspNetUserRoles", fun x -> { UserId = x.UserId; RoleId = x.RoleId } :> obj) |> ignore
@@ -240,7 +240,7 @@ open System.Collections.Generic
                 name = "AspNetUserTokens",
                 columns = (fun table ->
                     {
-                        UserId = table.Column<int>(nullable= false)
+                        UserId = table.Column<string>(nullable= false)
                         LoginProvider = table.Column<string>(nullable= false)
                         Name = table.Column<string>(nullable= false)
                         Value = table.Column<string>(nullable= true)
@@ -283,8 +283,7 @@ open System.Collections.Generic
 
             modelBuilder.Entity("FSharpWebApp.Models.ApplicationRole",
                 fun b ->
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd() |> ignore
+                    b.Property<string>("Id") |> ignore
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken() |> ignore
                     b.Property<string>("Name")
@@ -302,8 +301,7 @@ open System.Collections.Generic
 
             modelBuilder.Entity("FSharpWebApp.Models.ApplicationUser", 
                 fun b ->
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd() |> ignore
+                    b.Property<string>("Id") |> ignore
                     b.Property<int>("AccessFailedCount") |> ignore
                     b.Property<string>("ConcurrencyStamp") 
                         .IsConcurrencyToken() |> ignore
@@ -333,36 +331,36 @@ open System.Collections.Generic
                     b.ToTable("AspNetUsers") |> ignore
                 ) |> ignore
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", 
                 fun b ->                
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd() |> ignore
                     b.Property<string>("ClaimType") |> ignore
                     b.Property<string>("ClaimValue") |> ignore
-                    b.Property<int>("RoleId") |> ignore
+                    b.Property<string>("RoleId") |> ignore
                     b.HasKey("Id") |> ignore
                     b.HasIndex("RoleId") |> ignore
                     b.ToTable("AspNetRoleClaims") |> ignore
                 ) |> ignore
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", 
                 fun b ->                
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd() |> ignore
                     b.Property<string>("ClaimType") |> ignore
                     b.Property<string>("ClaimValue") |> ignore
-                    b.Property<int>("UserId") |> ignore
+                    b.Property<string>("UserId") |> ignore
                     b.HasKey("Id") |> ignore
                     b.HasIndex("UserId") |> ignore
                     b.ToTable("AspNetUserClaims") |> ignore
                 ) |> ignore
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", 
                 fun b ->                
                     b.Property<string>("LoginProvider") |> ignore
                     b.Property<string>("ProviderKey") |> ignore
                     b.Property<string>("ProviderDisplayName") |> ignore
-                    b.Property<int>("UserId") |> ignore
+                    b.Property<string>("UserId") |> ignore
                     b.HasKey("LoginProvider", "ProviderKey") |> ignore
                     b.HasIndex("UserId") |> ignore
                     b.ToTable("AspNetUserLogins") |> ignore
@@ -370,16 +368,16 @@ open System.Collections.Generic
 
             modelBuilder.Entity("FSharpWebApp.Models.AspNetUserRoles", 
                 fun b ->                
-                    b.Property<int>("UserId") |> ignore
-                    b.Property<int>("RoleId") |> ignore
+                    b.Property<string>("UserId") |> ignore
+                    b.Property<string>("RoleId") |> ignore
                     b.HasKey("UserId", "RoleId") |> ignore
                     b.HasIndex("RoleId") |> ignore
                     b.ToTable("AspNetUserRoles") |> ignore
                 ) |> ignore
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", 
                 fun b ->                
-                    b.Property<int>("UserId") |> ignore
+                    b.Property<string>("UserId") |> ignore
                     b.Property<string>("LoginProvider") |> ignore
                     b.Property<string>("Name") |> ignore
                     b.Property<string>("Value") |> ignore

@@ -1,7 +1,5 @@
 namespace FSharpWebApp.Models
-    open System
     open System.ComponentModel.DataAnnotations
-    open System.ComponentModel.DataAnnotations.Schema
     open System.Collections.Generic
     open Microsoft.AspNetCore.Identity
 
@@ -98,37 +96,18 @@ namespace FSharpWebApp.Models
 
     type ApplicationRole() =
         inherit IdentityRole<string>()
-        // [<DefaultValue>]val mutable _aspNetUsers:ICollection<AspNetUserRoles>
         interface IEntity<string> with
             member this.Id 
                 with get() = this.Id     
-        // member this.Users
-        //     with get() = this._aspNetUsers
-        //     and set value = this._aspNetUsers <- value           
 
-    type ApplicationUserRole() =
-        inherit IdentityUserRole<int>()
-
-    type ApplicationUserClaim() = 
-        inherit IdentityUserClaim<int>()    
-
-    type ApplicationUserLogin() = 
-        inherit IdentityUserLogin<int>()
-
-    type ApplicationUserToken() = 
-        inherit IdentityUserToken<int>()
-    // and AspNetUserRoles() = 
+    // type ApplicationUserRole() =
     //     inherit IdentityUserRole<string>()
-    //     [<DefaultValue>]val mutable applicationRole:ApplicationRole
-    //     [<DefaultValue>]val mutable applicationUser:ApplicationUser          
 
-    //     [<ForeignKey("RoleId")>]
-    //     member this.AspNetRole 
-    //         with get() = this.applicationRole
-    //         and set value = this.applicationRole <- value
-    //     [<ForeignKey("UserId")>]        
-    //     member this.AspNetUser
-    //         with get() = this.applicationUser
-    //         and set value = this.applicationUser <- value    
-    //     interface IEntity<string> with
-    //         member this.Id with get() = (this.RoleId)                  
+    // type ApplicationUserClaim() = 
+    //     inherit IdentityUserClaim<string>()    
+
+    // type ApplicationUserLogin() = 
+    //     inherit IdentityUserLogin<string>()
+
+    // type ApplicationUserToken() = 
+    //     inherit IdentityUserToken<string>()

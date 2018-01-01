@@ -4,7 +4,7 @@ namespace FSharpWebApp.DataAccessLayer
     open FSharpWebApp.Models
 
     type Repository<'E, 'T when 'E :not struct and 'E :> IEntity<'T> and 'T: equality>(context: AppDataContext) = 
-        let _context = context//new AppDataContext()
+        let _context = context
         interface IRepository<'E, 'T> with
             member this.AddEntity(entity) = 
                 let result = _context.Set<'E>().Add(entity).Entity
