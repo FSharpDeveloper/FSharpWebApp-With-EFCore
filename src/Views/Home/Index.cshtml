@@ -1,39 +1,182 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
+<!-- Wide card with share menu button -->
+<style>
+    .demo-card-wide.mdl-card {
+        width: 100%;
+    }
+
+    .demo-card-wide>.mdl-card__title {
+        color: #fff;
+        height: 176px;
+        background: url('../assets/demos/welcome_card.jpg') center / cover;
+    }
+
+    .demo-card-wide>.mdl-card__menu {
+        color: #fff;
+    }
+
+    body {
+        padding: 20px;
+        background: #fafafa;
+        position: relative;
+        overflow: hidden;
+    }
+
+    div.mdl-card {
+        width: 440px;
+        margin: 0 auto;
+    }
+
+    div.mdl-card__supporting-text {
+        font-size: 1.2em;
+    }
+    /* Table Sorting */
+
+    input+table {
+        margin-top: 1em;
+    }
+
+    $sortIndicatorIconColor: #000;
+    th.sort {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        min-width: 75px; // th "Year" is too small and sort icon needs extra room
+        &:hover {
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:after {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            content: "";
+            position: relative;
+            top: -10px;
+            right: -5px;
+        }
+        &.asc:after {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid $sortIndicatorIconColor;
+            content: "";
+            position: relative;
+            top: 4px;
+            right: -5px;
+        }
+        &.desc:after {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid $sortIndicatorIconColor;
+            content: "";
+            position: relative;
+            top: -4px;
+            right: -5px;
+        }
+    }
+</style>
+
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
 <script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-table.js"></script>
 <script src="/js/ko.mapping.js"></script>
 
-<table id="group-table" class="table table-striped table-hover">
-<thead>
-    <tr>
-    <th>#</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    </tr>
-</thead>
-<tbody data-bind="foreach: Groups">
-    <tr>
-        <th scope="row">1</th>
-        <td data-bind="text: groupId"></td>
-        <td data-bind="text: groupname"></td>
-    </tr>
-</tbody>
-</table>
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col"></div>
+    <div class="mdl-cell mdl-cell--6-col">
+
+
+
+        <table id="group-table" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>GroupId</th>
+                    <th class="sort">Group Name</th>
+                    <th>Description</th>
+                    <th>Members</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: Groups">
+                <tr>
+                    <td scope="row"></td>
+                    <td data-bind="text: groupId"></td>
+                    <td data-bind="text: groupname"></td>
+                    <td data-bind="text: description"></td>
+
+                    <td>
+                        <div>
+                            <button class="mdl-button mdl-js-button mdl-button--icon" data-bind="attr: {'id': 'group-menu-' + groupId}">
+                                <i class="material-icons">more_vert</i>
+                            </button>
+
+                            <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect" data-bind="attr: {'data-mdl-for': 'group-menu-' + groupId}">
+                                <li class="mdl-menu__item">Some Action</li>
+                                <li class="mdl-menu__item">Another Action</li>
+                                <li disabled class="mdl-menu__item">Disabled Action</li>
+                                <li class="mdl-menu__item">Yet Another Action</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="colspan:4" collapsed>
+                        <table class="mdl-data-table" data-bind="foreach: members">
+                            <tr>
+                                <td data-bind="text: username"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mdl-cell mdl-cell--2-col"></div>
+</div>
+
 
 <script>
-    function GroupsViewModel(groups){
+    function GroupsViewModel(groups) {
         var self = this;
         self.Groups = ko.observableArray(groups);
     }
-    $(document).ready(function(){
-        $.get("/Groups/LoadGroups", function(result){
+    $(document).ready(function () {
+        $.get("/Groups/LoadGroups", function (result) {
 
             var vm = new GroupsViewModel(result);
             ko.applyBindings(vm, document.getElementById("group-table"))
         })
     })
+
+    var options = {
+            valueNames: ['material', 'quantity', 'price']
+        },
+        documentTable = new List('mdl-table', options);
+
+    $($('th.sort')[0]).trigger('click', function () {
+        console.log('clicked');
+    });
+
+    $('input.search').on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            $(e.currentTarget).val('');
+            documentTable.search('');
+        }
+    });
 </script>
