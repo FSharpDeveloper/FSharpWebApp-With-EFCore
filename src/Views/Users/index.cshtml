@@ -6,11 +6,10 @@
 
 
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col"></div>
-  <div class="mdl-cell mdl-cell--6-col">
+  <div class="mdl-cell mdl-cell--3-col"></div>
+  <div class="mdl-cell mdl-cell--6-col" id="users-table" >
 
-<table id="users-table"  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
-
+<table  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
     <thead>
         <tr>
             <th>
@@ -26,13 +25,16 @@
                 <input type="password" class="form-control" data-bind="value: NewUser().password">
             </th>  
             <th>
-                <label>Confirm Password</label>
-                <input type="password" class="form-control" data-bind="value: NewUser().confirmpassword">
-            </th>                        
-            <th>
-                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect" data-bind="click: AddUser">Add</button>
+                <button class="mdl-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect" style="margin-top: 5px;" data-bind="click: AddUser">
+                    <i class="material-icons">add</i>
+                </button>
             </th>
-        </tr>
+        </tr>        
+    </thead>
+</table>
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+
+    <thead>
         <tr>
         <th>#</th>
         <th>First Name</th>
@@ -58,7 +60,7 @@
 </table>
 </div>
 
-  <div class="mdl-cell mdl-cell--2-col"></div>
+  <div class="mdl-cell mdl-cell--3-col"></div>
 </div>
 
 <script>
