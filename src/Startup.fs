@@ -13,6 +13,7 @@ open FSharpWebApp.DataAccessLayer
 open Microsoft.AspNetCore.Identity
 open Microsoft.AspNetCore.Identity.EntityFrameworkCore
 open FSharpWebApp.Models
+open Microsoft.AspNetCore.Http
 
 type Startup private () =
     new (configuration: IConfiguration) as this =
@@ -30,7 +31,12 @@ type Startup private () =
         services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<AppDataContext>()
             .AddDefaultTokenProviders() |> ignore           
-
+        // services
+        //     .AddAuthentication()
+        //     .AddCookie(fun options -> 
+        //         options.LoginPath <- PathString("/Account/Unauthorized/")
+        //         options.AccessDeniedPath <- PathString("/Account/Forbidden/")
+        //     ) |> ignore
         services.AddMvc() |> ignore
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,11 +44,15 @@ type Startup private () =
 
         if (env.IsDevelopment()) then
             app.UseDeveloperExceptionPage() |> ignore
+            app.UseBrowserLink() |> ignore
+            app.UseDatabaseErrorPage() |> ignore         
         else
             app.UseExceptionHandler("/Home/Error") |> ignore
 
         app.UseStaticFiles() |> ignore
+
         app.UseAuthentication() |> ignore
+
         app.UseMvc(fun routes ->
             routes.MapRoute(
                 name = "default",
