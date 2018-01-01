@@ -22,9 +22,10 @@ type Startup private () =
     // This method gets called by the runtime. Use this method to add services to the container.
     member this.ConfigureServices(services: IServiceCollection) =
         // Add framework services.
+        let connectionString = this.Configuration.GetConnectionString("DefaultConnection")
         services
             .AddDbContext<AppDataContext>
-                (fun(options) -> options.UseSqlServer(@"Server=.\;Initial Catalog=FSCourseDb;Integrated Security=true;")|> ignore) |> ignore
+                (fun(options) -> options.UseSqlServer(connectionString) |> ignore) |> ignore
 
         services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<AppDataContext>()

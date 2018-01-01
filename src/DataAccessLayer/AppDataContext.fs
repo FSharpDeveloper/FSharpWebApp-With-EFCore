@@ -5,6 +5,7 @@ namespace FSharpWebApp.DataAccessLayer
     open System.Collections.Generic
     open System.Collections
     open Microsoft.AspNetCore.Identity.EntityFrameworkCore
+    open Microsoft.Extensions.Configuration
 
     type AppDataContext(options, types) =         
         inherit IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
@@ -25,7 +26,10 @@ namespace FSharpWebApp.DataAccessLayer
             and set value = this._groups <- value 
 
         override this.OnConfiguring optionsBuilder =  
-            optionsBuilder.UseSqlServer(@"Server=.\;Initial Catalog=FSCourseDb;Integrated Security=true;") |> ignore
+            //if isNull Configuration then
+            //optionsBuilder.UseSqlServer(@"Server=.\;Initial Catalog=FSCourseDb;Integrated Security=true;") |> ignore
+            //else 
+            //    Configuration.GetConnectionString("Default") |> optionsBuilder.UseSqlServer |> ignore            
             base.OnConfiguring optionsBuilder |> ignore
 
         override this.OnModelCreating modelBuilder = 

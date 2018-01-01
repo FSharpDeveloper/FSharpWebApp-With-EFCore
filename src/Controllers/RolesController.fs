@@ -8,9 +8,10 @@ open Microsoft.AspNetCore.Mvc
 open FSharpWebApp.DataAccessLayer
 open FSharpWebApp.Models
 open System.Collections.Generic
+open Microsoft.AspNetCore.Authorization
 
 type CreatedResult = { id:obj }
-
+[<AuthorizeAttribute>]
 type RolesController (context: AppDataContext) =
     inherit Controller()
     let mutable _context = context;
