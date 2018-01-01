@@ -12,25 +12,9 @@ open System.Collections.Generic
 type HomeController (context: AppDataContext) =
     inherit Controller()
     let mutable _context = context;
+    let repo = (new Repository<Group, int>(_context) :> IRepository<Group, int>)
     member this.Index () =
-        let repo = new Repository<Group, int>(_context)
-        let record = {
-                GroupId = 0;
-                Groupname = "group1";
-                Description = "description";
-                Members = List<Member>[
-                    Member({
-                        MemberId = 0;
-                        Username = "test";
-                        Email = "test@server.com";
-                        Password = "password";
-                    })]                             
-            }
-        Group(record)
-        |> (repo:> IRepository<Group, int>).AddEntity
-        |> ignore
-
-        (repo:> IRepository<Group, int>).GetAll
+        repo.GetAll
         |> this.View
 
     member this.About () =

@@ -1,54 +1,76 @@
+<!-- List with avatar and controls -->
+<style>
+.demo-list-control {
+  width: 300px;
+}
+
+.demo-list-radio {
+  display: inline;
+}
+</style>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
 <script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-table.js"></script>
 <script src="/js/ko.mapping.js"></script>
 
-<table id="roles-table" class="table table-striped table-hover">
 
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--3-col"></div>
+  <div class="mdl-cell mdl-cell--6-col" id="roles-table" >
+
+
+
+<ul class="demo-list-control mdl-list" data-bind="foreach: Roles">
+  <li class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      <i class="material-icons  mdl-list__item-avatar">person</i>
+      <p data-bind="text: name"></p>
+    </span>
+    <span class="mdl-list__item-secondary-action">
+      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-1">
+        <input type="checkbox" id="list-checkbox-1" class="mdl-checkbox__input" checked />
+      </label>
+    </span>
+  </li>
+  </ul>
+<table  class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
     <thead>
         <tr>
-            <th colspan='3'>
-                <div class="block">
-                  <div class="title"><strong>Inline Form</strong></div>
-                  <div class="block-body">
-                    <form class="form-inline">
-                      <div class="form-group">
-                        <label for="inlineFormInput" class="sr-only">Name</label>
-                        <input id="inlineFormInput" type="text" class="mr-sm-3 form-control" data-bind="value: NewRole().name">
-                      </div>
-                      <div class="form-group">
-                        <input type="button" value="Add" data-bind="click: AddRole" class="btn btn-primary">
-                      </div>
-                    </form>
-                  </div>
-                </div>
+            <th>
+                <label>Role Name</label>
+                <input type="text" class="form-control" data-bind="value: NewRole().name">
             </th>
-        </tr>
+            <th>
+                <button class="mdl-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect" style="margin-top: 5px;" data-bind="click: AddRole">
+                    <i class="material-icons">add</i>
+                </button>
+            </th>
+        </tr>        
+    </thead>
+</table>
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+    <thead>
         <tr>
-        <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
+            <th>Id</th>
+            <th>Role Name</th>
+            <th>Description</th>
         </tr>
     </thead>
     <tbody data-bind="foreach: Roles">
         <tr>
-            <th scope="row" data-bind="text: id">1</th>
-            <td data-bind="text: id"></td>
-            <td><table data-bind="foreach: users">
+            <td scope="row" data-bind="text: id"></td>
+            <td data-bind="text: name"></td>
+            <!-- <td><table data-bind="foreach: users">
                 
-                </table></td>
+                </table></td> -->
         </tr>
     </tbody>
     <tfoot>
-        <tr>
-            <td colspan='3'>
-                <button class="btn btn-primary">Add New </button>
-            </td>
-        </tr>
-    </tfoo>
+    </tfoot>
 </table>
-@Html.Partial("_Create")
+</div>
+</div>
 <script>
     function RolesViewModel(roles){
         var self = this;

@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Drawer (Persistent) - Material Components Catalog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,99 +9,238 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="/css/styles.css">
+    <!-- <link rel="stylesheet" href="/css/styles.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>    
+    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"> -->
+    <link rel="stylesheet" href="/css/material.min.css">
+
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <!-- Uses a transparent header that draws on top of the layout's background -->
     <style>
-    .demo-layout-transparent {
-    background: url('../assets/demos/transparent.jpg') center / cover;
-    }
-    .demo-layout-transparent .mdl-layout__header,
-    .demo-layout-transparent .mdl-layout__drawer-button {
-    /* This background is dark, so we set text to white. Use 87% black instead if
+        .demo-layout-transparent {
+            background: url('../assets/demos/transparent.jpg') center / cover;
+        }
+
+        .demo-layout-transparent .mdl-layout__header,
+        .demo-layout-transparent .mdl-layout__drawer-button {
+            /* This background is dark, so we set text to white. Use 87% black instead if
         your background is light. */
-    color: white;
-    }
+            color: white;
+        }
+
+        .demo-card-wide.mdl-card {
+            width: 100%;
+        }
+
+        .demo-card-wide>.mdl-card__title {
+            color: #fff;
+            height: 176px;
+            background: url('../assets/demos/welcome_card.jpg') center / cover;
+        }
+
+        .demo-card-wide>.mdl-card__menu {
+            color: #fff;
+        }
+
+        .mdl-layout__container{
+            margin: 0px;
+        }
+        body {
+            padding: 0px;
+            background: #fafafa;
+            position: relative;
+            overflow: hidden;
+            margin: 0 0;
+        }
+
+        div.mdl-card {
+            width: 440px;
+            margin: 0 auto;
+        }
+
+        div.mdl-card__supporting-text {
+            font-size: 1.2em;
+        }
+        /* Table Sorting */
+
+        input+table {
+            margin-top: 1em;
+        }
+
+        $sortIndicatorIconColor: #000;
+        th.sort {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            min-width: 75px; // th "Year" is too small and sort icon needs extra room
+            &:hover {
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &:after {
+                display: inline-block;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                content: "";
+                position: relative;
+                top: -10px;
+                right: -5px;
+            }
+            &.asc:after {
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid $sortIndicatorIconColor;
+                content: "";
+                position: relative;
+                top: 4px;
+                right: -5px;
+            }
+            &.desc:after {
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 5px solid $sortIndicatorIconColor;
+                content: "";
+                position: relative;
+                top: -4px;
+                right: -5px;
+            }
+        }
     </style>
-  </head>
-  <body class="mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-<!-- Simple header with scrollable tabs. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+</head>
 
-  <header class="mdl-layout__header">
+<body class="mdl-color--grey-100 mdl-color-text--grey-700 mdl-base" style="padding:0px;">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs" style="margin:0px;">
+
+        <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout-title">Title</span>
+
+            <div class="mdl-layout__header-row">
+                <!-- <span class="mdl-layout-title">Title</span> -->
+                <span><img src="/images/logo.png" style="height:50px;width:50px;"> </span>
+            </div>
+                  <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav>
     </div>
-    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-      <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Groups</a>
-      <a href="#scroll-tab-2" class="mdl-layout__tab">Members</a>
-      <a href="#scroll-tab-3" class="mdl-layout__tab">Subjects</a>
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Groups</a>
+                <a href="#scroll-tab-2" class="mdl-layout__tab">Members</a>
+                <a href="#scroll-tab-3" class="mdl-layout__tab">Subjects</a>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            @Html.Partial("_Drawer")
+        </div>
+        <main class="mdl-layout__content">
+            <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+                <div class="page-content">
+                    @RenderBody()
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+                <div class="page-content"></div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="scroll-tab-3">
+                <div class="page-content">
+
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="scroll-tab-4">
+                <div class="page-content">
+
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="scroll-tab-5">
+                <div class="page-content">
+
+                </div>
+            </section>
+            <section class="mdl-layout__tab-panel" id="scroll-tab-6">
+                <div class="page-content">
+
+                </div>
+            </section>
+        </main>
+
+
+
+        @Html.Partial("_MegaFooter")
     </div>
-  </header>
-@*@Html.Partial("_Header.transparent")*@
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
-  </div>
-  <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
-      <div class="page-content">
-          @RenderBody()
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-2">
-      <div class="page-content"></div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-      <div class="page-content">
-          
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-      <div class="page-content">
-
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-5">
-      <div class="page-content">
-
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-6">
-      <div class="page-content">
-
-      </div>
-    </section>
-  </main>
-
-          
-
-    @Html.Partial("_MegaFooter")
-    </div>  
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js" asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery" crossorigin="anonymous" integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js" asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" crossorigin="anonymous" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    <script>
+        $(function () {
+            $('.mdl-collapse__content').each(function () {
+                var content = $(this);
+                content.css('margin-top', -content.height());
+            })
 
-    @RenderSection("Scripts", required: false)
-  </body>
+            $(document.body).on('click', '.mdl-collapse__button', function () {
+                $(this).parent('.mdl-collapse').toggleClass('mdl-collapse--opened');
+            })
+        })
+        function GroupsViewModel(groups) {
+            var self = this;
+            self.Groups = ko.observableArray(groups);
+        }
+        $(document).ready(function () {
+            $.get("/Groups/LoadGroups", function (result) {
+
+                var vm = new GroupsViewModel(result);
+                ko.applyBindings(vm, document.getElementById("group-table"))
+            })
+        })
+
+        var options = {
+                valueNames: ['material', 'quantity', 'price']
+            },
+            documentTable = new List('mdl-table', options);
+
+        $($('th.sort')[0]).trigger('click', function () {
+            console.log('clicked');
+        });
+
+        $('input.search').on('keyup', function (e) {
+            if (e.keyCode === 27) {
+                $(e.currentTarget).val('');
+                documentTable.search('');
+            }
+        });
+    </script>
+    @RenderSection("Scripts", required: false)`
+
+</body>
+
 </html>
